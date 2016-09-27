@@ -14,6 +14,8 @@ pipeline:
     file: Dockerfile
     when:
       branch: master
+      matrix:
+        MONGO_VERSION: 3.2
 
   kontena:
     image: kontena/cli:latest
@@ -23,6 +25,8 @@ pipeline:
       - kontena app deploy -f kontena-cluster.yml app
     when:
       branch: master
+      matrix:
+        MONGO_VERSION: 3.2
 
 services:
   database:
