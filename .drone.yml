@@ -7,13 +7,11 @@ pipeline:
 
   docker:
     image: plugins/docker:latest
-    environment:
-      - DOCKER_LAUNCH_DEBUG=true
     repo: jakolehm/todo-example
     tag: latest
     file: Dockerfile
     when:
-      branch: master
+      event: tag
       matrix:
         MONGO_VERSION: 3.2
 
@@ -24,7 +22,7 @@ pipeline:
     commands:
       - kontena app deploy -f kontena-cluster.yml app
     when:
-      branch: master
+      event: tag
       matrix:
         MONGO_VERSION: 3.2
 
