@@ -16,7 +16,7 @@ pipeline:
       branch: master
 
   kontena:
-    image: jnummelin/kontena-cli:latest
+    image: kontena/cli:latest
     environment:
       - SSL_IGNORE_ERRORS=true
     commands:
