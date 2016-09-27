@@ -16,11 +16,10 @@ pipeline:
       branch: master
 
   kontena:
-    image: kontena/cli:latest
+    image: jnummelin/kontena-cli:latest
     environment:
       - SSL_IGNORE_ERRORS=true
     commands:
-      - export
       - kontena app deploy -f kontena-cluster.yml app
     when:
       branch: master
