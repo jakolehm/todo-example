@@ -26,4 +26,9 @@ pipeline:
 
 services:
   database:
-    image: mongo:3.2
+    image: mongo:${MONGO_VERSION}
+
+matrix:
+  MONGO_VERSION:
+    - 3.2
+    - 3.0
