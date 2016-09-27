@@ -1,34 +1,29 @@
-build:
-  image: ruby:2.3
-  commands:
-    - bundle install --path=bundler
-    - rspec spec/
-cache:
-  mount:
-    - bundler
-compose:
-  mongodb:
-    image: mongo:3.2
-publish:
+pipeline:
+  test:
+    image: ruby:2.3
+    commands:
+      - bundle install --path=bundler
+      - rspec spec/
+
   docker:
-    username: $$DOCKER_HUB_USER
-    password: $$DOCKER_HUB_PWD
-    email: $$DOCKER_HUB_EMAIL
-    repo: kontena/todo-example
+    image: plugins/docker:latest
+    environment:
+      - DOCKER_LAUNCH_DEBUG=true
+    repo: jakolehm/todo-example
     tag: latest
     file: Dockerfile
     when:
       branch: master
-notify:
-  webhook:
-    urls:
-      - https://aws-master-1.kontena.io/v1/services/upcloud-drone/todo-app/deploy
-    header:
-      Authorization: Bearer $$KONTENA_TOKEN
-    content_type: application/json
+
+  kontena:
+    image: kontena/cli:latest
+    environment:
+      - SSL_IGNORE_ERRORS=true
+    commands:
+      - kontena app deploy -f kontena-cluster.yml app
     when:
       branch: master
-    template: >
-      {"force":true}
-  gitter:
-    webhook: $$GITTER_WEBHOOK
+
+services:
+  database:
+    image: mongo:3.2
