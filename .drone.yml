@@ -20,6 +20,7 @@ pipeline:
     environment:
       - SSL_IGNORE_ERRORS=true
     commands:
+      - export
       - kontena app deploy -f kontena-cluster.yml app
     when:
       branch: master
