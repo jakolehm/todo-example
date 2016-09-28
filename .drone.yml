@@ -1,6 +1,6 @@
 pipeline:
   test:
-    image: ruby:2.3
+    image: ruby:${RUBY_VERSION}
     commands:
       - bundle install --path=bundler
       - rspec spec/
@@ -34,3 +34,6 @@ matrix:
   MONGO_VERSION:
     - 3.2
     - 3.0
+  RUBY_VERSION:
+    - 2.3
+    - 2.2
