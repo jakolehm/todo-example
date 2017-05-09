@@ -1,14 +1,10 @@
-version: '2'
+stack: jakolehm/todo
+description: Simple todo app
+version: 0.1.0
 services:
   app:
-    image: kontena/todo-example:latest
-    extends:
-      file: docker-compose.yml
-      service: web    
+    image: jakolehm/todo-example:latest
+    build: 
+      context: .
     environment:
-      - MONGODB_URI=mongodb://${project}-mongodb.kontena.local/todo_production
-
-  mongodb:
-    image: mongo:3.2
-    command: mongod --smallfiles
-    stateful: true
+      - MONGODB_URI=mongodb://mongodb.${GRID}.kontena.local/todo_production

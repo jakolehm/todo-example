@@ -1,0 +1,22 @@
+language: ruby
+sudo: required
+rvm:
+  - 2.3.3
+cache: bundler
+services:
+  - docker
+  - mongodb
+install:
+  - gem install kontena-cli
+env:
+  global:
+
+script: 
+  - bundle exec rspec spec/
+  - kontena stack build
+
+deploy: 
+  - provider: script
+    script: rvm $TRAVIS_RUBY_VERSION do scripts/deploy.sh
+    on:
+      branch: travis
