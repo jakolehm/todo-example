@@ -3,7 +3,7 @@ description: Simple todo app
 version: 0.1.0
 services:
   app:
-    image: jakolehm/todo-example:latest
+    image: quay.io/jakolehm/todo-example:latest
     build: 
       context: .
     environment:
