@@ -8,6 +8,7 @@ services:
   - mongodb
 install:
   - gem install kontena-cli
+  - bundle install
 env:
   global:
 
