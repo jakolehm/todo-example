@@ -6,9 +6,8 @@ services:
     image: quay.io/jakolehm/todo-example:latest
     build: 
       context: .
+    command: bundle exec puma -p 9292 -e production
     secrets:
       - secret: TODO_MONGODB_URI
         name: MONGODB_URI
         type: env
-    environment:
-      - RACK_ENV=production
