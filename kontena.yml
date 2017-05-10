@@ -6,5 +6,7 @@ services:
     image: quay.io/jakolehm/todo-example:latest
     build: 
       context: .
-    environment:
-      - MONGODB_URI=mongodb://mongodb.${GRID}.kontena.local/todo_production
+    secrets:
+      - secret: TODO_MONGODB_URI
+        name: MONGODB_URI
+        type: env
