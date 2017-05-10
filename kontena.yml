@@ -10,3 +10,5 @@ services:
       - secret: TODO_MONGODB_URI
         name: MONGODB_URI
         type: env
+    environment:
+      - RACK_ENV=production
