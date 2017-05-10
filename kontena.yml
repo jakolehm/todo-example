@@ -2,6 +2,12 @@ stack: jakolehm/todo
 description: Simple todo app
 version: 0.1.0
 services:
+  lb:
+    image: kontena/lb:latest
+    ports:
+      - "80:80"
+    deploy:
+      strategy: daemon
   app:
     image: quay.io/jakolehm/todo-example:latest
     build: 
@@ -11,3 +17,7 @@ services:
       - secret: TODO_MONGODB_URI
         name: MONGODB_URI
         type: env
+    links:
+      - lb
+    environment:
+      - KONTENA_LB_INTERNAL_PORT=9292
