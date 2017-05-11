@@ -7,8 +7,26 @@ services:
   - mongodb
   - docker
 install:
+  - gem install kontena-cli
   - bundle install --deployment
+env:
+  global:
+    # KONTENA_URL
+    - secure: "s5wpf67D4AJSNnTKVWmbgzOPVWLF9c6FWaPfuNrD73Uxtl6QDZYgu4PxBWM/RmqV5fCbJYPovaiwU+0WXOLo1YMhGy0h7PrLbHnlLBLFudFOPhCY3cj6BJWMBEKp85KKyJMb2+Hypt7g9B+28HBQvLwPPI3GnbpYVh740S5Rw+1qrwla13jqagj/RfpdA7UnMs5Z9tCLx64VwNbd0+6ntice90xaza1s/MoDb7yNTxExKWQyenVJZnK5J+kG6u508VI2bxa00XCGFJMLq5Zo6Coe4Dyny9+zQZk1OE9qIjMSumDh5b8fO8UFYYSs6Vcsp71l4BhMbaVEwLWEcb88Biz2XMIA7flyvB5JB3iRM8sAJ4k55VBHVp8aVHJwfy60YF7hsrXVLsXcKY52zdgrRH1A+YlqxQFYU/O5mJ6nQadPwQXGE4Zlgl0pY3ky8PUEctl9lYDbLcqgTmmieAe1mq5JpiJDc9zmoUwiJIdaMlo/6hQMQfcfqDKxL4OxXN8oox8Na4ZfTCgxC329vdDNe8j/qQAnbFYh0cQuIoGRKv1Cx1xyobdsYDhJfMZOCM0mpdwFwI1O181xjWDAg1dp6Iqj4Nwbub90fgghMIDI5eKUCl2Yu2SbXQtVjkOUbkyI4madFDFJ08Jrahzj+hAKg3JbiKnfIfu6eZ9qvoJcKMM="
+    # KONTENA_TOKEN
+    - secure: "suGLL1IbbTYp9b4H7UVvsQ3Cis+LfJ71pVec1J4bFWb4xpf+iA5n5XmbjbuHiC2URC8x7XE11ccPbzmNCIELjsTI38wI3iK3KiK53gMIX7gMvYWTbX+Jin/TBex87f289y83pwOfZ4CdOfBY+XRbzep7ac5DsweLM9S9llytU73EDWI9Ssee3H0dZfy/Ubw+QlAyjaoS522927ouYaWNzSWNws01z6TMA9jfMq+m4iZzWKsQOJ+CEUq3885CzcnQIuQxAzqfy/QdfLRkPaFQFiqi1a4VdcmzpsV7TLNRMb55XsIi2zjQlDFMiJzSZYCfOFTbrzRr6APsZpHD8viKiOYIlWkSdk6oWQiAmeHsglTaMg1ziBQhAma3bNccAr1l/LGuGM8fRtGxltxX1+R4t5VxKLgSkU2ld1roH5gutzRdZhKAP2+uZrk9PRM2N8JHnCwbHDvbowstD/iZ1CsIXMTMjL/HJyEWKHfVkWzGYG2mI4JonWbNKhdEEdStLI4IAG+H+xD47B0PVD5yhfdzcvIiwoFtKok1egUC22mZaQc2qaVsWX5qTyp4lsSfDQr8qFLQE3qvWrr8VzW+kdQD7cVsEyXPWUX8kNpCSpMjKCiiNIn/FdheVuqL/aU6GSK0JUSc0RE+gW18tmMpG0wEy9pM/2wBtlQ6GCPEm2W2A3U="
+    # QUAY_PASSWORD
+    - secure: "ZW/tJCdMwVaqlmFxl4e90J3gweDa64ehJ4N0lQ2x6WnNGNSgjr05jqQlngPNdeflJvlwxxvM9qt08MJN/pSeqEJVrOF+tjpaw+nloMkGxTTJFaZj5idLVBHBSM2pihPBRJxI0HbZVcLw/i1D8o3RVaAvgbWFy6pOlUyeY3r3WXbd57te12JkHXXYg1rhdHZBjY7hXZ/chEuKVlXMOyeBO4M5QFUhuNHab2tonCGxKImPrcD24RKSxn5WOBt1ukTM7AsUlx21zuNfWPv/YfhOCgILXDauVzrRbEHqM8ppQFIJu2Vb04vLmAT5DHUvFmgkJ1lVdx6dSj0xOC7xbF/WW8eBIHQ7DXL/wZn7bKfVJj6J2QGJb6pup3XpdYXlNSTgQLH1ME3Z7pjU0WQH0Bm9pLO/se/3Np9PkLBweQb0fX4aBogji4tzbC1NIj9Ml/GnIGB8VD9i1xMvNx55g3+AmuugUV37vvMJoVLHA0PKibQWLhrXDq8olAef7I4ePDYMpNm1/zTayZeAnz3KIGAaF/JLFRhNpGugCMNRDjElkPiN7uD/hirF5LHVKocy5jkt4PuY/lOEokjoE5+bwiaazOWulmnJo9Nw6oE/osBOyzDeBtfW1ruIIYwShVEczfN7NucnKScB7diGzpvM/84gOGzTwWeOP2ndEYFM45/CwiY="
+    - QUAY_USERNAME=jakolehm+todo_travis_bot
+    - KONTENA_GRID=production
 script: 
   - bundle exec rspec spec/
   - docker-compose -f docker-compose.test.yml build
   - docker-compose -f docker-compose.test.yml run app rspec spec/
+deploy: 
+  - provider: script
+    rvm: 2.3.1
+    script: rvm $TRAVIS_RUBY_VERSION do scripts/deploy.sh
+    repo: jakolehm/todo-example
+    on:
+      branch: travis
