@@ -3,7 +3,8 @@ FROM ruby:2.3.1-alpine
 ADD Gemfile /app/
 ADD Gemfile.lock /app/
 
-RUN apk --update add --virtual build-dependencies ruby-dev build-base && \
+RUN apk --update add busybox && \
+    apk add --virtual build-dependencies ruby-dev build-base && \
     gem install bundler --no-ri --no-rdoc && \
     cd /app ; bundle install --without development test && \
     apk del build-dependencies
