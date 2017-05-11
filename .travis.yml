@@ -1,10 +1,13 @@
 language: ruby
+sudo: required
 cache: bundler
 rvm:
   - 2.3.1
 services:
   - mongodb
+  - docker
 install:
   - bundle install --deployment
 script: 
   - bundle exec rspec spec/
+  - docker-compose -f docker-compose.test.yml build
