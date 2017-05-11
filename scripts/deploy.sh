@@ -1,9 +1,7 @@
 #!/bin/bash
 set -e
 
-# Run tests once more in containers
-docker-compose -f docker-compose.test.yml build
-docker-compose -f docker-compose.test.yml run app rspec spec/
+export SSL_IGNORE_ERRORS=true
 
 # Login to image repo
 docker login -u "${QUAY_USERNAME}" -p "${QUAY_PASSWORD}" quay.io

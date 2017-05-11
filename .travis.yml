@@ -19,10 +19,11 @@ env:
     - secure: "ZW/tJCdMwVaqlmFxl4e90J3gweDa64ehJ4N0lQ2x6WnNGNSgjr05jqQlngPNdeflJvlwxxvM9qt08MJN/pSeqEJVrOF+tjpaw+nloMkGxTTJFaZj5idLVBHBSM2pihPBRJxI0HbZVcLw/i1D8o3RVaAvgbWFy6pOlUyeY3r3WXbd57te12JkHXXYg1rhdHZBjY7hXZ/chEuKVlXMOyeBO4M5QFUhuNHab2tonCGxKImPrcD24RKSxn5WOBt1ukTM7AsUlx21zuNfWPv/YfhOCgILXDauVzrRbEHqM8ppQFIJu2Vb04vLmAT5DHUvFmgkJ1lVdx6dSj0xOC7xbF/WW8eBIHQ7DXL/wZn7bKfVJj6J2QGJb6pup3XpdYXlNSTgQLH1ME3Z7pjU0WQH0Bm9pLO/se/3Np9PkLBweQb0fX4aBogji4tzbC1NIj9Ml/GnIGB8VD9i1xMvNx55g3+AmuugUV37vvMJoVLHA0PKibQWLhrXDq8olAef7I4ePDYMpNm1/zTayZeAnz3KIGAaF/JLFRhNpGugCMNRDjElkPiN7uD/hirF5LHVKocy5jkt4PuY/lOEokjoE5+bwiaazOWulmnJo9Nw6oE/osBOyzDeBtfW1ruIIYwShVEczfN7NucnKScB7diGzpvM/84gOGzTwWeOP2ndEYFM45/CwiY="
     - QUAY_USERNAME=jakolehm+todo_travis_bot
     - KONTENA_GRID=production
-    - SSL_IGNORE_ERRORS=true
 
 script: 
   - bundle exec rspec spec/
+  - docker-compose -f docker-compose.test.yml build
+  - docker-compose -f docker-compose.test.yml run app rspec spec/
 
 deploy: 
   - provider: script
