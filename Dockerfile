@@ -10,7 +10,6 @@ RUN apk --update add busybox && \
     apk del build-dependencies
 
 ADD . /app
-RUN chown -R nobody:nogroup /app
 USER nobody
 
 ENV RACK_ENV production

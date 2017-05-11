@@ -11,6 +11,9 @@ development:
 production:
   clients:
     default:
+      <% if ENV['MONGODB_URI'] %>
+      uri: <%= ENV['MONGODB_URI'] %>
+      <% else %>
       username: <%= ENV['MONGODB_USERNAME'] || 'admin' %>
       password: "<%= ENV['MONGODB_PASSWORD'] %>"
       database: <%= ENV['MONGODB_DATABASE'] || 'todo_production' %>
@@ -22,4 +25,5 @@ production:
       <% else %>
       hosts:
         - localhost:27017
+      <% end %>
       <% end %>
