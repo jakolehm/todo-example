@@ -14,7 +14,12 @@ production:
       username: <%= ENV['MONGODB_USERNAME'] || 'admin' %>
       password: "<%= ENV['MONGODB_PASSWORD'] %>"
       database: <%= ENV['MONGODB_DATABASE'] || 'todo_production' %>
+      <% if ENV['MONGODB_HOSTS'] %>
       hosts: 
         <% ENV['MONGODB_HOSTS'].split(',').each do |host| %>
         - <%= host %>:27017
         <% end %>
+      <% else %>
+      hosts:
+        - localhost:27017
+      <% end %>
