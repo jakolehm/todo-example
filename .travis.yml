@@ -23,11 +23,11 @@ env:
 
 script: 
   - bundle exec rspec spec/
-  - docker login -u "${QUAY_USERNAME}" -p "${QUAY_PASSWORD}" quay.io
-  - kontena stack build
 
 deploy: 
   - provider: script
+    rvm: 2.3.3
     script: rvm $TRAVIS_RUBY_VERSION do scripts/deploy.sh
+    repo: jakolehm/todo-example
     on:
       branch: travis
