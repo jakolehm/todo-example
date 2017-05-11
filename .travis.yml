@@ -32,4 +32,4 @@ deploy:
     repo: jakolehm/todo-example
     on:
       branch: travis
-      tags: true
+      #tags: true
