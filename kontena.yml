@@ -1,5 +1,5 @@
 stack: jakolehm/todo
-description: Simple todo app
+description: Amazing todo app
 version: 0.1.0
 variables:
   todo_mongo_password:
@@ -10,12 +10,6 @@ variables:
     to:
       vault: TODO_MONGO_PASSWORD
 services:
-  lb:
-    image: kontena/lb:latest
-    ports:
-      - "80:80"
-    deploy:
-      strategy: daemon
   app:
     image: quay.io/jakolehm/todo-example:latest
     build: 
@@ -25,9 +19,9 @@ services:
       - secret: TODO_MONGO_PASSWORD
         name: MONGODB_PASSWORD
         type: env
-    links:
-      - lb
     environment:
       - MONGODB_USERNAME=admin
       - MONGODB_DATABASE=todo_production
       - KONTENA_LB_INTERNAL_PORT=9292
+    links:
+      - http-ingress/lb
