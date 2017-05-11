@@ -1,7 +1,7 @@
 language: ruby
 sudo: required
 rvm:
-  - 2.3.3
+  - 2.3.1
 cache: bundler
 services:
   - docker
@@ -22,12 +22,12 @@ env:
 
 script: 
   - bundle exec rspec spec/
-  - docker-compose -f docker-compose.test.yml build
-  - docker-compose -f docker-compose.test.yml run app rspec spec/
+  #- docker-compose -f docker-compose.test.yml build
+  #- docker-compose -f docker-compose.test.yml run app rspec spec/
 
 deploy: 
   - provider: script
-    rvm: 2.3.3
+    rvm: 2.3.1
     script: rvm $TRAVIS_RUBY_VERSION do scripts/deploy.sh
     repo: jakolehm/todo-example
     on:
