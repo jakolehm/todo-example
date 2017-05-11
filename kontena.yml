@@ -1,6 +1,14 @@
 stack: jakolehm/todo
 description: Simple todo app
 version: 0.1.0
+variables:
+  todo_mongo_password:
+    type: string
+    from:
+      vault: TODO_MONGO_PASSWORD
+      random_string: 14
+    to:
+      vault: TODO_MONGO_PASSWORD
 services:
   lb:
     image: kontena/lb:latest
@@ -14,10 +22,12 @@ services:
       context: .
     command: bundle exec puma -p 9292 -e production
     secrets:
-      - secret: TODO_MONGODB_URI
-        name: MONGODB_URI
+      - secret: TODO_MONGODB_PASSWORD
+        name: MONGODB_PASSWORD
         type: env
     links:
       - lb
     environment:
+      - MONGODB_USERNAME=admin
+      - MONGODB_DATABASE=todo_production
       - KONTENA_LB_INTERNAL_PORT=9292

@@ -11,4 +11,10 @@ development:
 production:
   clients:
     default:
-      uri: <%= ENV['MONGODB_URI'] || 'mongodb://localhost:27017/todo_production' %>
+      username: <%= ENV['MONGODB_USERNAME'] || 'admin' %>
+      password: "<%= ENV['MONGODB_PASSWORD'] %>"
+      database: <%= ENV['MONGODB_DATABASE'] || 'todo_production' %>
+      hosts: 
+        <% ENV['MONGODB_HOSTS'].split(',').each do |host| %>
+        - <%= host %>:27017
+        <% end %>
