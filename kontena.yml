@@ -22,6 +22,7 @@ services:
     environment:
       - MONGODB_USERNAME=admin
       - MONGODB_DATABASE=todo_production
+      - MONGODB_HOSTS=peer-1.mongo.${GRID}.kontena.local,peer-2.mongo.${GRID}.kontena.local,peer-3.mongo.${GRID}.kontena.local
       - KONTENA_LB_INTERNAL_PORT=9292
     links:
       - http-ingress/lb
