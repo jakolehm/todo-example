@@ -11,3 +11,4 @@ install:
 script: 
   - bundle exec rspec spec/
   - docker-compose -f docker-compose.test.yml build
+  - docker-compose -f docker-compose.test.yml run app rspec spec/
