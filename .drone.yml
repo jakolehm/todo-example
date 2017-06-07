@@ -1,0 +1,27 @@
+pipeline:
+  test:
+    image: ruby:2.3
+    commands:
+      - bundle install --path=bundler
+      - rspec spec/
+
+  docker:
+    image: plugins/docker:latest
+    environment:
+      - DOCKER_LAUNCH_DEBUG=true
+    repo: jakolehm/todo-example
+    tag: ${DRONE_TAG}
+    file: Dockerfile
+    when:
+      event: tag
+
+  kontena:
+    image: kontena/cli:1.3.0.rc2
+    commands:
+      - kontena stack upgrade todo
+    when:
+      event: tag
+
+services:
+  database:
+    image: mongo:3.2

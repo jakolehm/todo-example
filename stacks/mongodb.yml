@@ -1,45 +1,18 @@
 stack: jakolehm/mongo
 expose: peer
 version: 0.2.0
-description: MongoDB 3.2 replica set (3 members)
-variables:
-  key_file:
-    type: string
-    from:
-      vault: MONGO_KEYFILE
-      random_string: 64
-    to:
-      vault: MONGO_KEYFILE
-  cluster_admin_password:
-    type: string
-    from:
-      vault: MONGO_ADMIN_PASSWORD
-      random_string: 14
-    to:
-      vault: MONGO_ADMIN_PASSWORD
-
+description: MongoDB 3.4 replica set (3 members)
 services:
   peer:
-    image: mongo:3.2
+    image: mongo:3.4
     stateful: true
     instances: 3
-    command: --replSet kontena --keyFile /etc/mongo.key
-    secrets:
-      - secret: MONGO_KEYFILE
-        name: MONGO_KEYFILE
-        type: env
-      - secret: MONGO_ADMIN_PASSWORD
-        name: MONGO_ADMIN_PASSWORD
-        type: env
+    command: --replSet kontena
     health_check:
       protocol: tcp
       port: 27017
     hooks:
       post_start:
-        - cmd: echo $${MONGO_KEYFILE} > /etc/mongo.key && chmod 600 /etc/mongo.key && chown mongodb /etc/mongo.key
-          name: write_keyfile
-          instances: '*'
-          oneshot: false
         - cmd: sleep 10
           name: sleep
           instances: 3
@@ -48,19 +21,11 @@ services:
           name: rs_initiate
           instances: 3
           oneshot: true
-        - cmd: sleep 5
-          name: sleep_before_createuser
-          instances: 3
-          oneshot: true
-        - cmd: mongo --eval "db.createUser({user":" 'admin', pwd":" '$${MONGO_ADMIN_PASSWORD}', roles":"[{role":"'root',db:'admin'}]});" admin
-          name: rs_add_admin
-          instances: 3
-          oneshot: true
-        - cmd: mongo -u admin -p $${MONGO_ADMIN_PASSWORD} --eval "printjson(rs.add('peer-1.${STACK}.${GRID}.kontena.local'))" admin
+        - cmd: mongo --eval "printjson(rs.add('peer-1.${STACK}.${GRID}.kontena.local'))" admin
           name: rs_add2
           instances: 3
           oneshot: true
-        - cmd: mongo -u admin -p $${MONGO_ADMIN_PASSWORD} --eval "printjson(rs.add('peer-2.${STACK}.${GRID}.kontena.local'))" admin
+        - cmd: mongo --eval "printjson(rs.add('peer-2.${STACK}.${GRID}.kontena.local'))" admin
           name: rs_add3
           instances: 3
           oneshot: true
