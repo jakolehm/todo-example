@@ -10,10 +10,8 @@ pipeline:
     environment:
       - DOCKER_LAUNCH_DEBUG=true
     repo: jakolehm/todo-example
-    tag: ${DRONE_TAG}
+    tag: drone
     file: Dockerfile
-    when:
-      event: tag
 
 
 services:
