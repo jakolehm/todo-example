@@ -5,7 +5,27 @@ pipeline:
       - bundle install --path=bundler
       - rspec spec/
 
-  docker:
+  docker_test:
+    image: plugins/docker:latest
+    environment:
+      - DOCKER_LAUNCH_DEBUG=true
+    repo: jakolehm/todo-example
+    tag: ${DRONE_TAG}
+    file: Dockerfile
+    when:
+      branch: cloudexpo
+
+  deploy_test:
+    image: kontena/cli:1.3.0.rc2
+    environment:
+      - INSTANCES=2
+      - VIRTUAL_HOST=cloudexpo-test.kontena.io
+    commands:
+      - kontena stack upgrade todo
+    when:
+      branch: cloudexpo
+
+  docker_prod:
     image: plugins/docker:latest
     environment:
       - DOCKER_LAUNCH_DEBUG=true
@@ -15,8 +35,11 @@ pipeline:
     when:
       event: tag
 
-  kontena:
+  deploy_prod:
     image: kontena/cli:1.3.0.rc2
+    environment:
+      - INSTANCES=5
+      - VIRTUAL_HOST=cloudexpo-demo.kontena.io
     commands:
       - kontena stack upgrade todo
     when:
