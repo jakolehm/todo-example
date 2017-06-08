@@ -10,7 +10,7 @@ pipeline:
     environment:
       - DOCKER_LAUNCH_DEBUG=true
     repo: jakolehm/todo-example
-    tag: test
+    tag: git-${DRONE_COMMIT}
     file: Dockerfile
     when:
       branch: cloudexpo
@@ -19,7 +19,7 @@ pipeline:
     image: kontena/cli:1.3.0.rc2
     environment:
       - INSTANCES=2
-      - DRONE_TAG=test
+      - DRONE_TAG=git-${DRONE_COMMIT}
       - VIRTUAL_HOST=cloudexpo-test.kontena.io
     commands:
       - kontena stack upgrade todo-test
