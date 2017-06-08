@@ -11,7 +11,7 @@
 	<body>
 		<section class="todoapp">
 			<header class="header">
-				<h1>CloudExpo Todos</h1>
+				<h1>Todos</h1>
         <form action="todos" method="post">
 				    <input class="new-todo" name="todo[content]" placeholder="What needs to be done?" autofocus autocomplete="off">
         </form>
@@ -21,6 +21,7 @@
       </section>
     </section>
     <footer class="info">
+			Served by: <%= Socket.gethostname %><br>
       Inspired by <a href="http://todomvc.com/">TodoMVC</a> - Powered by <a href="http://kontena.io/">Kontena</a>
 		</footer>
 
