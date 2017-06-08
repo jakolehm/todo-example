@@ -25,8 +25,4 @@ production:
         - localhost:27017
       <% end %>
       <% end %>
-      options:
-        user: <%= ENV['MONGODB_USERNAME'] || 'admin' %>
-        password: "<%= ENV['MONGODB_PASSWORD'] %>"
-        auth_source: <%= ENV['MONGODB_DATABASE'] || 'todo_production' %>
       

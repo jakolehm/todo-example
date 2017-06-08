@@ -28,7 +28,7 @@ services:
     deploy:
       wait_for_port: 9292
     environment:
-      - MONGODB_URI=mongodb://peer-1.mongo.${GRID}.kontena.local:27017,peer-2.mongo.${GRID}.kontena.local:27017,peer-3.mongo.${GRID}.kontena.local:27017
+      - MONGODB_URI=mongodb://peer-1.mongo.${GRID}.kontena.local:27017,peer-2.mongo.${GRID}.kontena.local:27017,peer-3.mongo.${GRID}.kontena.local:27017/todo_production
       - KONTENA_LB_INTERNAL_PORT=9292
       - KONTENA_LB_VIRTUAL_HOSTS={{ virtual_host }}
     links:
