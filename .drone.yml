@@ -28,7 +28,7 @@ pipeline:
       - kontena stack install --name todo-test kontena.yml || kontena stack upgrade todo-test kontena.yml
     secrets:
       - source: kontena_uri
-        target: KONTENA_URI
+        target: KONTENA_URL
       - source: kontena_grid
         target: KONTENA_GRID
       - source: kontena_token
