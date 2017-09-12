@@ -25,7 +25,14 @@ pipeline:
       - DRONE_TAG=git-${DRONE_COMMIT}
       - VIRTUAL_HOST=do-nyc-todos.kontena.io
     commands:
-      - kontena stack upgrade todo-test
+      - kontena stack install --name todo-test kontena.yml || kontena stack upgrade todo-test kontena.yml
+    secrets:
+      - source: kontena_uri
+        target: KONTENA_URI
+      - source: kontena_grid
+        target: KONTENA_GRID
+      - source: kontena_token
+        target: KONTENA_TOKEN
     when:
       branch: do-nyc
 
