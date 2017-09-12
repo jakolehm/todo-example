@@ -14,6 +14,7 @@ pipeline:
     repo: index.docker.io/jakolehm/todo-example
     tag: git-${DRONE_COMMIT}
     file: Dockerfile
+    secrets: [ docker_username, docker_password ]
     when:
       branch: do-nyc
 
