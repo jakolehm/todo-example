@@ -1,6 +1,8 @@
 pipeline:
   test:
     image: ruby:2.3
+    environment:
+      - MONGODB_URI=mongodb://mongo:27017/todo_test
     commands:
       - bundle install --path=bundler
       - rspec spec/
@@ -27,5 +29,5 @@ pipeline:
       branch: do-nyc
 
 services:
-  database:
+  mongo:
     image: mongo:3.2
