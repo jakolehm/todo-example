@@ -15,12 +15,8 @@ require_relative './models/todo'
 
   # Add the todo to the database
   post "/todos" do
-    todo = Todo.new(params[:todo])
-    if todo.save
-      redirect "/"
-    else
-      erb :"todo/new"
-    end
+    Todo.new(params[:todo]).save
+    redirect "/"
   end
 
   # Updates the todo with id in the database
