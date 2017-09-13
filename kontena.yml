@@ -16,13 +16,14 @@ variables:
   image_tag:
     type: string
     default: latest
-    from: 
+    from:
       env: DRONE_TAG
 services:
   app:
     image: jakolehm/todo-example:{{ image_tag }}
     instances: {{ instances }}
-    build: 
+    mem_limit: 128m
+    build:
       context: .
     command: bundle exec puma -p 9292 -e production
     deploy:
