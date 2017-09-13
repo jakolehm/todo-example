@@ -21,16 +21,25 @@ button {
 }
 
 body {
-	font: 14px 'Helvetica Neue', Helvetica, Arial, sans-serif;
+	font-family: Roboto, Helvetica, Arial, sans-serif;
 	line-height: 1.4em;
-	background: #f5f5f5;
-	color: #4d4d4d;
-	min-width: 230px;
-	max-width: 550px;
-	margin: 0 auto;
+	background: #1C1E21;
+	color: #fff;
+
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 	font-weight: 300;
+	background-image: url(planet.png);
+	background-position: ;
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-blend-mode: color-dodge;
+}
+
+.container {
+	margin: 0 auto;
+	min-width: 230px;
+	max-width: 550px;
 }
 
 :focus {
@@ -42,11 +51,12 @@ body {
 }
 
 .todoapp {
-	background: #fff;
+	background: #292b30;
 	margin: 130px 0 40px 0;
 	position: relative;
-	box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2),
-	            0 25px 50px 0 rgba(0, 0, 0, 0.1);
+	-webkit-box-shadow: 0 5px 10px -2px black;
+	box-shadow: 0 5px 10px -2px black;
+	border-radius: 3px;
 }
 
 .todoapp input::-webkit-input-placeholder {
@@ -69,12 +79,12 @@ body {
 
 .todoapp h1 {
 	position: absolute;
-	top: -155px;
+	top: -135px;
 	width: 100%;
-	font-size: 80px;
+	font-size: 60px;
 	font-weight: 100;
 	text-align: center;
-	color: rgba(175, 47, 47, 0.15);
+	color: #3d90ce;
 	-webkit-text-rendering: optimizeLegibility;
 	-moz-text-rendering: optimizeLegibility;
 	text-rendering: optimizeLegibility;
@@ -316,9 +326,9 @@ html .clear-completed:active {
 }
 
 .info {
-	margin: 65px auto 0;
-	color: #bfbfbf;
-	font-size: 10px;
+	margin: 45px auto 0;
+	color: #cecece;
+	font-size: 14px;
 	text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
 	text-align: center;
 }
