@@ -7,7 +7,7 @@ pipeline:
       - bundle install --path=bundler
       - rspec spec/
 
-  docker_test:
+  docker_staging:
     image: plugins/docker:latest
     environment:
       - DOCKER_LAUNCH_DEBUG=true
@@ -18,14 +18,14 @@ pipeline:
     when:
       branch: do-nyc
 
-  deploy_test:
+  deploy_staging:
     image: kontena/cli:1.3.4
     environment:
       - INSTANCES=2
       - DRONE_TAG=git-${DRONE_COMMIT}
-      - VIRTUAL_HOST=do-nyc-todos.kontena.works
+      - VIRTUAL_HOST=do-nyc-todos-stage.kontena.works
     commands:
-      - kontena stack install --name todo-test kontena.yml || kontena stack upgrade todo-test kontena.yml
+      - kontena stack install --name todos-stage kontena.yml || kontena stack upgrade todos-stage kontena.yml
     secrets:
       - source: kontena_uri
         target: KONTENA_URL
@@ -35,6 +35,34 @@ pipeline:
         target: KONTENA_TOKEN
     when:
       branch: do-nyc
+
+  docker_production:
+    image: plugins/docker:latest
+    environment:
+      - DOCKER_LAUNCH_DEBUG=true
+    repo: index.docker.io/jakolehm/todo-example
+    tag: ${DRONE_TAG}
+    file: Dockerfile
+    secrets: [ docker_username, docker_password ]
+    when:
+      branch: do-nyc
+
+  deploy_production:
+    image: kontena/cli:1.3.4
+    environment:
+      - INSTANCES=3
+      - VIRTUAL_HOST=do-nyc-todos.kontena.works
+    commands:
+      - kontena stack install --name todos kontena.yml || kontena stack upgrade todos kontena.yml
+    secrets:
+      - source: kontena_uri
+        target: KONTENA_URL
+      - source: kontena_grid
+        target: KONTENA_GRID
+      - source: kontena_token
+        target: KONTENA_TOKEN
+    when:
+      event: tag
 
 services:
   mongo:
