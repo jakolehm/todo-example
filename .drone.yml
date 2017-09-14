@@ -45,7 +45,7 @@ pipeline:
     file: Dockerfile
     secrets: [ docker_username, docker_password ]
     when:
-      branch: do-nyc
+      event: tag
 
   deploy_production:
     image: kontena/cli:1.3.4
