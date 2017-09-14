@@ -23,7 +23,7 @@ pipeline:
     environment:
       - INSTANCES=2
       - DRONE_TAG=git-${DRONE_COMMIT}
-      - VIRTUAL_HOST=do-nyc-todos.kontena.io
+      - VIRTUAL_HOST=do-nyc-todos.kontena.works
     commands:
       - kontena stack install --name todo-test kontena.yml || kontena stack upgrade todo-test kontena.yml
     secrets:
