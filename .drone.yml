@@ -7,7 +7,7 @@ pipeline:
       - bundle install --path=bundler
       - rspec spec/
 
-  docker_staging:
+  build_staging:
     image: plugins/docker:latest
     environment:
       - DOCKER_LAUNCH_DEBUG=true
@@ -36,7 +36,7 @@ pipeline:
     when:
       branch: do-nyc
 
-  docker_production:
+  build_production:
     image: plugins/docker:latest
     environment:
       - DOCKER_LAUNCH_DEBUG=true
