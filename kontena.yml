@@ -1,6 +1,9 @@
 stack: jakolehm/todo
 description: Amazing todo app
-version: 0.1.0
+version: 1.1.0
+depends:
+  mongo:
+    stack: ./stacks/mongodb.yml
 variables:
   virtual_host:
     type: string
@@ -21,6 +24,7 @@ variables:
 services:
   app:
     image: jakolehm/todo-example:{{ image_tag }}
+    build: .
     instances: {{ instances }}
     mem_limit: 128m
     build:
@@ -29,7 +33,7 @@ services:
     deploy:
       wait_for_port: 9292
     environment:
-      - MONGODB_URI=mongodb://peer-1.mongo.${GRID}.kontena.local:27017,peer-2.mongo.${GRID}.kontena.local:27017,peer-3.mongo.${GRID}.kontena.local:27017/todo_production
+      - MONGODB_URI=mongodb://peer-1.${mongo}.${GRID}.kontena.local:27017,peer-2.${mongo}.${GRID}.kontena.local:27017,peer-3.${mongo}.${GRID}.kontena.local:27017/todo_production
       - KONTENA_LB_INTERNAL_PORT=9292
       - KONTENA_LB_VIRTUAL_HOSTS={{ virtual_host }}
     links:
