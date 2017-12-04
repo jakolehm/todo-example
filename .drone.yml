@@ -34,7 +34,7 @@ pipeline:
       - source: kontena_token
         target: KONTENA_TOKEN
     when:
-      branch: do-nyc
+      branch: reinvent
 
   build_production:
     image: plugins/docker:latest
