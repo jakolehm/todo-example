@@ -16,7 +16,7 @@ pipeline:
     file: Dockerfile
     secrets: [ docker_username, docker_password ]
     when:
-      branch: do-nyc
+      branch: reinvent
 
   deploy_staging:
     image: kontena/cli:1.4.1
